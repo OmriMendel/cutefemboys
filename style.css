@@ -1,0 +1,193 @@
+/* --- Base Theme & Typography --- */
+:root {
+    --bg-color: #0f0f13;
+    --text-primary: #ffffff;
+    --text-secondary: #8e8e93;
+    --accent-color: #ff79c6; /* A soft pink accent */
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+/* --- Header Styling --- */
+header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    /* Creates a cool gradient effect on the text */
+    background: linear-gradient(45deg, #bd93f9, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    margin: 10px 0 0;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- The Image Gallery Grid --- */
+#gallery {
+    display: grid;
+    /* Automatically fits as many 280px columns as possible */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Individual Image Links --- */
+#gallery a {
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    /* Adds a subtle shadow and smooths out the hover animation */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #1c1c24; /* Placeholder color before image loads */
+}
+
+/* The hover effect: lifts the image up slightly and expands the shadow */
+#gallery a:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* --- The Images Themselves --- */
+#gallery img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover; /* Prevents stretching */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Slight internal zoom effect when hovering */
+#gallery a:hover img {
+    transform: scale(1.05);
+}
+
+/* --- The Loading Trigger at the Bottom --- */
+#loading-trigger {
+    text-align: center;
+    padding: 40px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* A small CSS animation to make the loading indicator look active */
+.pulse {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    animation: pulse-animation 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+/* --- Age Gate Overlay --- */
+#age-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9); /* Very dark background */
+    backdrop-filter: blur(10px); /* Blurs the images behind it */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Keeps it on top of absolutely everything */
+}
+
+/* A helper class to hide the gate once verified */
+#age-gate.hidden {
+    display: none;
+}
+
+/* The Modal Box */
+.age-modal {
+    background-color: #1c1c24;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent-color);
+}
+
+.age-modal h2 {
+    margin-top: 0;
+    color: var(--accent-color);
+}
+
+.age-modal p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* The Buttons */
+.age-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.age-buttons button {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#btn-yes {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+#btn-yes:hover {
+    background-color: #ff5eb0;
+}
+
+#btn-no {
+    background-color: #333;
+    color: var(--text-primary);
+}
+
+#btn-no:hover {
+    background-color: #444;
+}
