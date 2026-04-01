@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>CUTE FEMBOYS</title>
-    
+    <title>Cute Femboys :3</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
-    <body>
-        <div id="age-gate" class="hidden">
+<body>
+    <div id="age-gate" class="hidden">
         <div class="age-modal">
             <h2>Age Verification</h2>
             <p>This website contains explicit content. Are you 18 years of age or older?</p>
@@ -23,16 +22,74 @@
             </div>
         </div>
     </div>
-    
-    <header>
-        <h1>CUTE FEMBOYS</h1>
-        <p>best femboy gallery</p>
-    </header>
-    
-    <div id="gallery"></div>
 
-    <div id="loading-trigger">
-        <span class="pulse"></span> Loading more...
+    <nav id="navbar">
+        <button id="nav-home" class="active">Home</button>
+        <button id="nav-favs">Favourites</button>
+    </nav>
+    
+    <div id="main-view">
+        <header>
+            <h1 id="main-title">CUTE FEMBOYS</h1>
+            <p>best femboy gallery</p>
+            <div class="search-container">
+                <input type="text" id="tag-search" placeholder="Search tags..." autocomplete="off">
+                <div id="search-suggestions" class="hidden"></div>
+            </div>
+            
+            <div class="gallery-controls">
+                <div class="control-group">
+                    <label for="grid-slider">Grid Size:</label>
+                    <input type="range" id="grid-slider" min="150" max="500" value="280">
+                </div>
+                <div class="control-group">
+                    <label for="random-toggle" class="checkbox-label">
+                        <input type="checkbox" id="random-toggle" checked>
+                        Randomize Feed
+                    </label>
+                </div>
+            </div>
+        </header>
+        
+        <div id="gallery"></div>
+        <div id="loading-trigger">
+            <span class="pulse"></span> Loading more...
+        </div>
+    </div>
+
+    <div id="fav-view" class="hidden">
+        <header>
+            <h1>FAVOURITES</h1>
+            <p>your saved images</p>
+        </header>
+        <div id="fav-gallery"></div>
+    </div>
+
+    <button id="btt-btn" class="hidden">↑</button>
+
+    <aside id="side-panel" class="hidden">
+        <div class="side-nav">
+            <button id="side-close">✖ Close</button>
+            <button id="side-fav-btn">🤍 Fav</button>
+        </div>
+        <div class="side-content">
+            <img id="side-image" src="" alt="Preview">
+            <button id="side-expand">⤢ Open Full Screen</button>
+            <a id="side-original" href="" target="_blank" rel="noopener noreferrer">↗ View Original File</a>
+        </div>
+    </aside>
+
+    <div id="detail-view" class="hidden">
+        <div class="detail-nav">
+            <button id="detail-back">← Back to Gallery</button>
+            <span id="detail-counter"></span>
+            <button id="detail-fav-btn">🤍 Add to Favourites</button>
+        </div>
+        <div class="detail-content">
+            <button id="detail-prev" class="nav-arrow">‹</button>
+            <img id="detail-image" src="" alt="">
+            <button id="detail-next" class="nav-arrow">›</button>
+        </div>
     </div>
 
     <script src="index.js"></script>

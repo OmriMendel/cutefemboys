@@ -1,9 +1,10 @@
-/* --- Base Theme & Typography --- */
 :root {
     --bg-color: #0f0f13;
     --text-primary: #ffffff;
     --text-secondary: #8e8e93;
-    --accent-color: #ff79c6; /* A soft pink accent */
+    --accent-color: #ff79c6;
+    --nav-bg: #1c1c24;
+    --grid-min: 280px;
 }
 
 body {
@@ -12,9 +13,36 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--text-primary);
+    overflow-x: hidden; /* Prevents side-scroll when side panel opens */
 }
 
-/* --- Header Styling --- */
+#navbar {
+    position: sticky;
+    top: 0;
+    background-color: var(--nav-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+#navbar button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#navbar button:hover, #navbar button.active {
+    color: var(--accent-color);
+}
+
 header {
     text-align: center;
     padding: 40px 20px 20px;
@@ -26,14 +54,13 @@ h1 {
     font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: 2px;
-    /* Creates a cool gradient effect on the text */
     background: linear-gradient(45deg, #bd93f9, var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 header p {
-    margin: 10px 0 0;
+    margin: 10px 0 20px;
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 1rem;
@@ -41,54 +68,126 @@ header p {
     letter-spacing: 1px;
 }
 
-/* --- The Image Gallery Grid --- */
-#gallery {
+.search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#tag-search {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: var(--nav-bg);
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+#tag-search:focus {
+    border-color: var(--accent-color);
+}
+
+#search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--nav-bg);
+    border-radius: 8px;
+    margin-top: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    text-align: left;
+}
+
+.suggestion-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #2a2a35;
+    color: var(--text-primary);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.gallery-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#gallery, #fav-gallery {
     display: grid;
-    /* Automatically fits as many 280px columns as possible */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--grid-min), 1fr));
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 20px 40px;
+    transition: margin-right 0.3s ease; /* Smooth transition when side panel opens */
 }
 
-/* --- Individual Image Links --- */
-#gallery a {
+.gallery-item {
     display: block;
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    /* Adds a subtle shadow and smooths out the hover animation */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #1c1c24; /* Placeholder color before image loads */
+    background-color: #1c1c24;
+    cursor: pointer;
 }
 
-/* The hover effect: lifts the image up slightly and expands the shadow */
-#gallery a:hover {
+.gallery-item:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
 }
 
-/* --- The Images Themselves --- */
-#gallery img {
+.gallery-item img {
     width: 100%;
     height: 350px;
-    object-fit: cover; /* Prevents stretching */
+    object-fit: cover;
     display: block;
     transition: transform 0.5s ease;
 }
 
-/* Slight internal zoom effect when hovering */
-#gallery a:hover img {
+.gallery-item:hover img {
     transform: scale(1.05);
 }
 
-/* --- The Loading Trigger at the Bottom --- */
 #loading-trigger {
     text-align: center;
     padding: 40px;
-    margin-top: 20px;
     font-size: 1.1rem;
     color: var(--text-secondary);
     font-weight: 600;
@@ -98,7 +197,6 @@ header p {
     gap: 10px;
 }
 
-/* A small CSS animation to make the loading indicator look active */
 .pulse {
     display: inline-block;
     width: 10px;
@@ -114,27 +212,234 @@ header p {
     100% { transform: scale(0.8); opacity: 0.5; }
 }
 
-/* --- Age Gate Overlay --- */
+/* --- NEW: Back to Top Button --- */
+#btt-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 90;
+    transition: opacity 0.3s, transform 0.3s, background-color 0.2s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#btt-btn:hover {
+    background-color: #ff5eb0;
+    transform: translateY(-5px);
+}
+
+#btt-btn.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    display: block !important; /* Override standard hidden class */
+}
+
+/* --- NEW: Side Panel --- */
+#side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    background-color: var(--nav-bg);
+    box-shadow: -5px 0 25px rgba(0,0,0,0.8);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateX(0);
+}
+
+#side-panel.hidden {
+    transform: translateX(100%);
+    display: flex !important; /* Keep it in layout, just translate it off screen */
+}
+
+.side-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #15151b;
+}
+
+.side-nav button {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.side-nav button:hover {
+    color: var(--accent-color);
+}
+
+#side-fav-btn.favorited {
+    color: var(--accent-color);
+}
+
+.side-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+#side-image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #0f0f13;
+}
+
+#side-expand, #side-original {
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+#side-expand {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+#side-expand:hover {
+    background-color: #ff5eb0;
+}
+
+#side-original {
+    background-color: #333;
+    color: white;
+}
+
+#side-original:hover {
+    background-color: #444;
+}
+
+/* --- UPDATED: Detail View --- */
+#detail-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 15, 19, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent;
+}
+
+.detail-nav button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.detail-nav button:hover {
+    background-color: var(--accent-color);
+}
+
+#detail-counter {
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.detail-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#detail-image {
+    max-width: 80%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+/* Next / Prev Arrows */
+.nav-arrow {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 4rem;
+    cursor: pointer;
+    padding: 0 20px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.nav-arrow:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.nav-arrow:disabled {
+    color: #333;
+    cursor: default;
+    transform: none;
+}
+
+/* Generic Helpers */
+.hidden {
+    display: none !important;
+}
+
+/* Age Gate (Unchanged) */
 #age-gate {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.9); /* Very dark background */
-    backdrop-filter: blur(10px); /* Blurs the images behind it */
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Keeps it on top of absolutely everything */
+    z-index: 9999;
 }
 
-/* A helper class to hide the gate once verified */
-#age-gate.hidden {
-    display: none;
-}
-
-/* The Modal Box */
 .age-modal {
     background-color: #1c1c24;
     padding: 40px;
@@ -145,49 +450,18 @@ header p {
     border: 1px solid var(--accent-color);
 }
 
-.age-modal h2 {
-    margin-top: 0;
-    color: var(--accent-color);
-}
+.age-modal h2 { margin-top: 0; color: var(--accent-color); }
+.age-modal p { color: var(--text-secondary); margin-bottom: 30px; line-height: 1.5; }
+.age-buttons { display: flex; flex-direction: column; gap: 15px; }
+.age-buttons button { padding: 15px; border: none; border-radius: 8px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background-color 0.2s; }
+#btn-yes { background-color: var(--accent-color); color: #fff; }
+#btn-yes:hover { background-color: #ff5eb0; }
+#btn-no { background-color: #333; color: var(--text-primary); }
+#btn-no:hover { background-color: #444; }
 
-.age-modal p {
-    color: var(--text-secondary);
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-/* The Buttons */
-.age-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.age-buttons button {
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-#btn-yes {
-    background-color: var(--accent-color);
-    color: #fff;
-}
-
-#btn-yes:hover {
-    background-color: #ff5eb0;
-}
-
-#btn-no {
-    background-color: #333;
-    color: var(--text-primary);
-}
-
-#btn-no:hover {
-    background-color: #444;
+/* Responsive tweaks for Side Panel */
+@media (max-width: 768px) {
+    #side-panel {
+        width: 100vw; /* Take up full screen on mobile */
+    }
 }
