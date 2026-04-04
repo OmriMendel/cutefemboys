@@ -139,7 +139,6 @@ function loadNewTag(newTag) {
     currentPage = 1;
     allFetchedImages = []; 
     gallery.innerHTML = '';
-    document.getElementById('main-title').innerText = `CUTE ${tags.toUpperCase()}`;
     window.history.pushState({}, '', `?tags=${tags}`);
     fetchMoreImages();
 }
