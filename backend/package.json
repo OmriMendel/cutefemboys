@@ -1,0 +1,15 @@
+{
+  "name": "random-image-api",
+  "version": "1.0.0",
+  "description": "API for redirecting to a random image of a femboy :3",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
