@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <h2 id="message">Loading...</h2>
+
+    <script>
+        const currentPath = window.location.pathname;
+
+        if (currentPath.includes('/api/random')) {
+            
+            const limit = 1;
+            const apiKey = "e154d25fd829562d05143096818747c03d25238896a92e3a914ff8c14a41e0c4d84645b02894b1f34da73c5e2bb79df30d8f65c9a0dfc2cb4f2e10f0710f8270";
+            const userID = "6048827";
+            const BASE_API_URL = `https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit=${limit}&api_key=${apiKey}&user_id=${userID}&pid=`; 
+
+            async function fetchAndRedirect() {
+                try {
+                    const response = await fetch(`${BASE_API_URL}1&tags=femboy+sort:random`);
+                    const data = await response.json();
+
+                    if (data && data.length > 0) {
+                        const firstItem = data[0];
+                        const imageUrl = firstItem.sample_url || firstItem.file_url || firstItem.preview_url;
+                        
+                        window.location.href = imageUrl;
+                    } else {
+                        document.getElementById('message').innerText = "No image found.";
+                    }
+                } catch (error) {
+                    document.getElementById('message').innerText = "Error loading image.";
+                }
+            }
+
+            fetchAndRedirect();
+
+        } else {
+            document.getElementById('message').innerText = "404 - Page Not Found";
+            setTimeout(() => { window.location.href = '/'; }, 2000);
+        }
+    </script>
+</body>
+</html>
